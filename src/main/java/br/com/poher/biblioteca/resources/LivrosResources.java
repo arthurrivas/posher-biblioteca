@@ -1,5 +1,6 @@
 package br.com.poher.biblioteca.resources;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.poher.biblioteca.domains.Livro;
@@ -28,9 +30,15 @@ public class LivrosResources {
 	LivroService livroService;
 	
 	@GetMapping
-	public ResponseEntity<?> listarLivros(){
+	public ResponseEntity<?> listarLivros(@RequestParam(required = false, value = "titulo") String titulo){
 		
-		List<Livro> listaLivros = livroService.findAll(); 
+		List<Livro> listaLivros = new ArrayList<Livro>();
+		
+		if( titulo != null) {
+			listaLivros = livroService.findByTituloLike(titulo);
+		}else {
+			listaLivros = livroService.findAll(); 
+		}
 		
 		return new ResponseEntity<>(HttpStatus.ACCEPTED).ok(listaLivros);
 	}
@@ -68,7 +76,8 @@ public class LivrosResources {
 		Livro livro = obj.get();
 		
 		livro.setTitulo(livroDTO.getTitulo());
-		livro.setDescricao(livroDTO.getDescricao());	
+		livro.setDescricao(livroDTO.getDescricao());
+		livro.setIsbn(livroDTO.getIsbn());
 		
 		
 		livroService.saveAll(Arrays.asList(livro));
@@ -76,7 +85,7 @@ public class LivrosResources {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED).ok(livro);
 		
 	}
-	@DeleteMapping(value = "/{id}")
+	@DeleteMapping(value = "/deletar/{id}")
 	public ResponseEntity<Void> apagaLivro(@PathVariable String id){
 		
 		livroService.deleteById(Integer.valueOf(id));

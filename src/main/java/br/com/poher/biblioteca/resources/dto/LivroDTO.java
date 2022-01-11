@@ -6,6 +6,7 @@ public class LivroDTO {
 	
 	private String titulo;
 	private String descricao;
+	private String isbn;
 	
 	
 	public LivroDTO() {
@@ -13,14 +14,15 @@ public class LivroDTO {
 	}
 
 
-	public LivroDTO(String titulo, String descricao) {
+	public LivroDTO(String titulo, String descricao, String isbn) {
 		super();
 		this.titulo = titulo;
 		this.descricao = descricao;
+		this.isbn = isbn;
 	}
 	
 	public Livro criaLivro() {
-		return new Livro(null, this.titulo, this.descricao);
+		return new Livro(null, this.titulo, this.descricao , this.isbn);
 	}
 
 	public String getTitulo() {
@@ -41,6 +43,17 @@ public class LivroDTO {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	
 	
 	
 	

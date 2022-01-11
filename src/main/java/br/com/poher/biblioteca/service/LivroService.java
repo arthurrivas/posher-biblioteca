@@ -15,6 +15,9 @@ public class LivroService {
 	@Autowired
 	LivroRepository livroRepository;
 	
+	public List<Livro> findByTituloLike(String titulo){
+		return livroRepository.findByTituloContaining(titulo);
+	}
 	
 	public List<Livro> findAll() {
 		List<Livro> listaLivros = livroRepository.findAll();
