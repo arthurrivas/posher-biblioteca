@@ -52,7 +52,7 @@ public class LivrosResources {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED).ok(listaLivros);
 	}
 	
-	
+	// recupera um livro baseado no id passado no caminho da requisição
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> buscaUmLivro(@PathVariable String id){
 		
@@ -65,6 +65,8 @@ public class LivrosResources {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED).ok(livro.get());	
 	}
 	
+	// Cadastra um novo livro passando os dados pelo corpo da requisição
+	// EX: EX: {"tiluto":"titulo do livro", "descricao":" resumo do livro", "isbn":"111111111"}
 	@PostMapping
 	public ResponseEntity<?> cadastraLivro(@RequestBody LivroDTO livroDTO){
 		
@@ -113,6 +115,7 @@ public class LivrosResources {
 		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 	}
 	
+	// deleta um livro baseado no id passado no caminho da requisição
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> apagaLivro(@PathVariable String id){
 		
