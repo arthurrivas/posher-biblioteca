@@ -5,7 +5,7 @@ Para conseguir testar toda a api, é necessario usar o PostMan para fazer as req
 
 Para conseguir acessar os end points é necessario estar logado;
 Utilizando o método Http POST crie um login pelo endpoint https://posher-biblioteca.herokuapp.com/usuarios passando como corpo de requisição um email e uma senha.
-Exemplo: {"email":"exemploemail@gmail.com","senha","senhaEscolhida"}.
+Exemplo: {"email":"exemploemail@gmail.com","senha":"senhaEscolhida"}.
 
 Logo em seguida faça login pela endPoint https://posher-biblioteca.herokuapp.com/login com o usuario recem criado.
 Como não foi criado o frontEnd, manualmente pegue o valor no Header de resposta chamado "Authorization", e cole no header da proxima requisição que ira ser feita.
