@@ -7,7 +7,8 @@ Abaixo os end points e a função de cada um.
 
 
  Retorna um Json com todos os livros cadastrados usando o método Http GET;
- https://posher-biblioteca.herokuapp.com/livros
+ É possivel tambem pesquisar atraves dos titulos dos livros pela url de requisição
+ https://posher-biblioteca.herokuapp.com/livros?titulo=Exemplo+titulo
 
 
  Passando um id como parametro é possivel retornar os dados de apenas 1 livro usando o método Http GET; 
@@ -25,5 +26,5 @@ Abaixo os end points e a função de cada um.
  https://posher-biblioteca.herokuapp.com/livros/atualizar/{id}
 
  End point para deletar cadasro passando como parametro o identificador utilizando o métpdp Http DELETE;
- https://posher-biblioteca.herokuapp.com/livros/{id}
+ https://posher-biblioteca.herokuapp.com/livros/deletar/{id}
 
