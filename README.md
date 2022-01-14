@@ -8,7 +8,7 @@ Utilizando o método Http POST crie um login pelo endpoint https://posher-biblio
 Exemplo: {"email":"exemploemail@gmail.com","senha":"senhaEscolhida"}.
 
 Logo em seguida faça login pela endPoint https://posher-biblioteca.herokuapp.com/login com o usuario recem criado.
-Como não foi criado o frontEnd, manualmente pegue o valor no Header de resposta chamado "Authorization", e cole no header da proxima requisição que ira ser feita.
+Como não foi criado o frontEnd responsavel para acessar as respostas do servidor, manualmente pegue o value no Header de resposta da key "Authorization", e cole no header da proxima requisição que ira ser feita, do memsmo jeito que a resposta, coloque como key o Authorization e value o token. 
 Esse valor sera o Token de authenticação valido por 1 hora.
 
 Agora que esta autenticado, esta liberado para mexer livremente na api.
