@@ -87,6 +87,9 @@ public class LivrosResources {
 		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 	}
 	
+	// Atualiza o livro baseado no id passado como variavel no caminho da requisição,
+	// Passe as novas informações pelo corpo da requisição
+	//EX: {"tiluto":"novo titulo", "descricao":"", "isbn":"111111111"}
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<?> atualizaLivro(@PathVariable(name = "id") String id, @RequestBody LivroDTO livroDTO){
 		Integer idInt = Integer.valueOf(id);
@@ -109,6 +112,7 @@ public class LivrosResources {
 		}
 		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 	}
+	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> apagaLivro(@PathVariable String id){
 		

@@ -63,6 +63,7 @@ public class UsuarioResources {
 		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 	}
 
+	
 	/*
 	 * Cadastra um usuario novo usuario passando os dados pelo corpo da requisição.
 	 * Exemplo:{"email": "arthurrivas1@gmail.com", "senha": "1234"}

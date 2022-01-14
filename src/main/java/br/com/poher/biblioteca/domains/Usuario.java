@@ -71,7 +71,11 @@ public class Usuario {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		if(!email.isBlank() && email != null) {
+			this.email = email;
+		}
+
+		
 	}
 
 	public String getSenha() {
@@ -79,7 +83,12 @@ public class Usuario {
 	}
 
 	public void setSenha(String senha) {
-		this.senha = senha;
+		if(!senha.isBlank() && senha != null) {
+			this.senha = senha;
+		}
+		
+		
+		
 	}
 
 	public String getPerfil() {

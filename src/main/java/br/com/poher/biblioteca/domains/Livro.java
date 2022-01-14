@@ -60,7 +60,7 @@ public class Livro implements Serializable {
 	}
 
 	public void setTitulo(String titulo) {
-		if(!titulo.isBlank()) {
+		if(!titulo.isBlank() && titulo != null) {
 			this.titulo = titulo;
 		}
 	}
@@ -70,7 +70,7 @@ public class Livro implements Serializable {
 	}
 
 	public void setDescricao(String descricao) {
-		if(!descricao.isBlank()) {
+		if(!descricao.isBlank() && descricao != null) {
 			this.descricao = descricao;
 		}
 	}
@@ -80,7 +80,7 @@ public class Livro implements Serializable {
 	}
 
 	public void setIsbn(String isbn) {
-		if(!isbn.isBlank()) {
+		if(!isbn.isBlank() && isbn != null) {
 			this.isbn = isbn;
 		}
 	}
