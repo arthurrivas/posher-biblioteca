@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.poher.biblioteca.domains.Livro;
-import br.com.poher.biblioteca.resources.dto.LivroDTO;
+import br.com.poher.biblioteca.domains.Usuario;
+import br.com.poher.biblioteca.dto.LivroDTO;
+import br.com.poher.biblioteca.security.UsuarioSS;
 import br.com.poher.biblioteca.service.LivroService;
+import br.com.poher.biblioteca.service.UserService;
+import br.com.poher.biblioteca.service.UsuarioService;
 
 @RestController
 @RequestMapping(value = "/livros")
@@ -29,6 +33,11 @@ public class LivrosResources {
 	@Autowired
 	LivroService livroService;
 	
+	@Autowired
+	UsuarioService usuarioService;
+	
+	
+	// retorna todos os livros, ou então seleciona um usando o opcional parametro "titulo"
 	@GetMapping
 	public ResponseEntity<?> listarLivros(@RequestParam(required = false, value = "titulo") String titulo){
 		
@@ -47,8 +56,6 @@ public class LivrosResources {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> buscaUmLivro(@PathVariable String id){
 		
-		
-		
 		Optional<Livro> livro = livroService.findById(Integer.valueOf(id));
 		
 		if( livro == null) {
@@ -58,39 +65,56 @@ public class LivrosResources {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED).ok(livro.get());	
 	}
 	
-	@PostMapping(value = "/cadastro")
+	@PostMapping
 	public ResponseEntity<?> cadastraLivro(@RequestBody LivroDTO livroDTO){
 		
-		Livro livro = livroDTO.criaLivro();
+		UsuarioSS usuarioSS = UserService.authenticated();
 		
-		livroService.saveAll(Arrays.asList(livro));
+		if(usuarioSS != null ) {
+			Optional<Usuario> obj = usuarioService.findById(usuarioSS.getId());
+			Usuario usuario = obj.get();
+			
+			Livro livro = livroService.criaLivro(livroDTO, usuario);
+			
+			usuario.adicionaLivros(livro);
+			
+			usuarioService.saveAll(Arrays.asList(usuario));
+			livroService.saveAll(Arrays.asList(livro));
+				
+			return new ResponseEntity<Livro>(HttpStatus.CREATED).ok(livro);
+		}
 		
-		return new ResponseEntity<Livro>(HttpStatus.CREATED).ok(livro);
+		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 	}
 	
-	
-	@PutMapping(value = "/atualizar/{id}")
+	@PutMapping(value = "/{id}")
 	public ResponseEntity<?> atualizaLivro(@PathVariable(name = "id") String id, @RequestBody LivroDTO livroDTO){
+		Integer idInt = Integer.valueOf(id);
 		
-		Optional<Livro> obj = livroService.findById(Integer.valueOf(id));
-		Livro livro = obj.get();
-		
-		livro.setTitulo(livroDTO.getTitulo());
-		livro.setDescricao(livroDTO.getDescricao());
-		livro.setIsbn(livroDTO.getIsbn());
-		
-		
-		livroService.saveAll(Arrays.asList(livro));
-		
-		return new ResponseEntity<>(HttpStatus.ACCEPTED).ok(livro);
-		
+		UsuarioSS usuarioSS = UserService.authenticated();
+		if(usuarioSS != null) {
+			
+			Optional<Livro> objLivro = livroService.findById(idInt);
+			Optional<Usuario> objUsuario = usuarioService.findById(usuarioSS.getId());
+			Usuario usuario = objUsuario.get();
+			
+			Livro livro = livroService.atualizaLivro( usuario, objLivro.get(), livroDTO); 
+			usuario.adicionaLivros(livro);
+			
+			
+			usuarioService.saveAll(Arrays.asList(usuario));
+			livroService.saveAll(Arrays.asList(livro));
+			
+			return new ResponseEntity<>(HttpStatus.ACCEPTED).ok(livro);
+		}
+		return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 	}
-	@DeleteMapping(value = "/deletar/{id}")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> apagaLivro(@PathVariable String id){
 		
 		livroService.deleteById(Integer.valueOf(id));
 		
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.noContent().build(); 
 	}
 	
 }

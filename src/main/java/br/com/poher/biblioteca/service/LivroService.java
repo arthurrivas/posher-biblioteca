@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.poher.biblioteca.domains.Livro;
+import br.com.poher.biblioteca.domains.Usuario;
+import br.com.poher.biblioteca.dto.LivroDTO;
 import br.com.poher.biblioteca.repositorys.LivroRepository;
 
 @Service
@@ -43,5 +45,18 @@ public class LivroService {
 		livroRepository.deleteAll();
 	}
 	
+	public Livro criaLivro(LivroDTO livroDTO, Usuario usuario) {
+		return new Livro(null, livroDTO.getTitulo(), livroDTO.getDescricao() , livroDTO.getIsbn(), usuario);
+	}
+	
+	public Livro atualizaLivro( Usuario usuario,Livro livro, LivroDTO livroDTO) {
+		livro.setTitulo(livroDTO.getTitulo());
+		livro.setDescricao(livroDTO.getDescricao());
+		livro.setIsbn(livroDTO.getIsbn());
+		livro.setUsuario(usuario);
+		
+		return livro;
+		
+	}
 	
 }

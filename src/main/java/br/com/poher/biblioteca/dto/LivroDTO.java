@@ -1,6 +1,4 @@
-package br.com.poher.biblioteca.resources.dto;
-
-import br.com.poher.biblioteca.domains.Livro;
+package br.com.poher.biblioteca.dto;
 
 public class LivroDTO {
 	
@@ -21,9 +19,7 @@ public class LivroDTO {
 		this.isbn = isbn;
 	}
 	
-	public Livro criaLivro() {
-		return new Livro(null, this.titulo, this.descricao , this.isbn);
-	}
+	
 
 	public String getTitulo() {
 		return titulo;
